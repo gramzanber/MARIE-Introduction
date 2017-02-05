@@ -1,0 +1,44 @@
+|         ORG 100           
+100 1121 |  Begin  LOAD A
+101 2125 |         STORE AXB
+102 1122 |         LOAD B
+103 2127 |         STORE temp
+104 9105 |         JUMP Loop
+105 1127 |  Loop   LOAD temp
+106 4128 |         SUBT One
+107 2127 |         STORE temp
+108 8800 |         SKIPCOND 800
+109 910E |         JUMP Next
+10A 1125 |         LOAD AXB
+10B 3121 |         ADD A
+10C 2125 |         STORE AXB
+10D 9105 |         JUMP Loop
+10E 1123 |  Next   LOAD C
+10F 2126 |         STORE CXD
+110 1124 |         LOAD D
+111 2127 |         STORE temp
+112 9113 |         JUMP Loop2
+113 1127 |  Loop2  LOAD temp
+114 4128 |         SUBT One
+115 2127 |         STORE temp
+116 8800 |         SKIPCOND 800
+117 911C |         JUMP Next2
+118 1126 |         LOAD CXD
+119 3123 |         ADD C
+11A 2126 |         STORE CXD
+11B 9113 |         JUMP Loop2
+11C 1125 |  Next2  LOAD AXB
+11D 3126 |         ADD CXD
+11E 2129 |         STORE Answer
+11F 6000 |         OUTPUT
+120 7000 |         HALT
+         |
+121 0004 |  A      DEC 4
+122 0002 |  B      DEC 2
+123 0003 |  C      DEC 3
+124 0005 |  D      DEC 5
+125 0000 |  AXB    DEC 0
+126 0000 |  CXD    DEC 0
+127 0000 |  temp   DEC 0
+128 0001 |  One    DEC 1
+129 0000 |  Answer DEC 0

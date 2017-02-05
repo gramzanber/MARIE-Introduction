@@ -1,0 +1,146 @@
+Org 100
+
+JnS ldArr
+JnS in
+JnS sort
+JnS out
+
+Halt
+
+//sort array
+sort,   Hex 0
+   sl2, JnS ldArr
+	Load N
+	Subt c1
+	Store N
+	Load swapped//zero swapped flag
+	Subt swapped
+	Store swapped	
+    sl, LoadI ArrL
+	Store temp
+	Load ArrL
+	Add c1
+	Store ArrL
+	LoadI ArrL
+	Subt temp
+	Skipcond 800
+	JnS swap
+	Load N
+	Subt c1
+	Store N	
+	Skipcond 400//test N
+	Jump sl
+	Load Size//reset N
+	Subt c1
+	Store N
+	Load swapped//end if nothing swapped
+	Skipcond 400
+	Jump sl2
+	JumpI sort
+
+//swap curent and previous
+swap,	Hex 0
+	Load swapped
+	Add c1
+	Store swapped
+	LoadI ArrL
+	Store temp2
+	Load temp	
+	StoreI ArrL
+	Load ArrL
+	Subt c1
+	Store ArrL
+	Load temp2
+	StoreI ArrL
+	Load ArrL
+	Add c1
+	Store ArrL
+	JumpI swap
+
+//input N and N values
+in,	Hex 0
+	Input
+	Store Size
+	Loop, Store N
+	Input
+	Output
+	StoreI ArrL
+	Load ArrL
+	Add c1
+	Store ArrL
+	Load N
+	Subt c1
+	Skipcond 400
+	Jump Loop
+	Store ArrL
+	load Arr
+	jumpI in
+
+//output array
+out,	Hex 0
+	JnS ldArr	
+    ol, LoadI ArrL
+	Output
+	Load ArrL
+	Add c1
+	Store ArrL
+	Load N
+	Subt c1   
+	Store N
+	Skipcond 400
+	Jump ol
+	JumpI out
+
+//reset N and ArrL pointer
+ldArr,	Hex 0
+	Load Size
+	Store N
+	l, Load Arr
+	Load l
+	Subt H1000
+	Store ArrL
+	JumpI ldArr
+
+Size, Dec 5
+
+c1, Dec 1
+H1000, Hex 1000
+
+ArrL, Dec 0
+N, Dec 0
+swapped, Dec 0	//flag if swapped
+temp, Hex 0	//temps for swapping
+temp2, Hex 0
+
+Arr, Dec -47
+	Dec -43
+	Dec -41
+	Dec -37
+	Dec -31
+	Dec -29
+	Dec -23
+	Dec -19
+	Dec -17
+	Dec -13
+	Dec -11
+	Dec -7
+	Dec -5
+	Dec -3
+	Dec -2
+	Dec -1
+	Dec 1
+	Dec 2
+	Dec 3
+	Dec 5
+	Dec 7
+	Dec 11
+	Dec 13
+	Dec 17
+	Dec 19
+	Dec 23
+	Dec 29
+	Dec 31
+	Dec 37
+	Dec 41
+	Dec 43
+	Dec 47

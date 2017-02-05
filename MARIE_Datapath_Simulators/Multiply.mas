@@ -1,0 +1,39 @@
+org 100
+
+jns getVariables
+jns multiply
+jns done
+halt
+
+getVariables, clear
+input 
+store varOne
+input
+store varTwo
+jumpi getVariables
+
+multiply, clear
+load varTwo
+store counter
+loop, load counter
+skipcond 800
+jumpi multiply
+load result
+add varOne
+store result
+load counter
+subt counterAdder
+store counter
+jump loop
+
+done, clear
+load result
+output
+jumpi done
+
+/ Variables
+varTwo, dec 0
+varOne, dec 0
+result, dec 0
+counter, dec 0
+counterAdder, dec 1

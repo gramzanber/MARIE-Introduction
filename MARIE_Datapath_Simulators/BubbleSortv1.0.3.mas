@@ -1,0 +1,80 @@
+OGR	0
+		JUMP	START
+
+	 BADDR, hex                 	0000
+	 EADDR, hex		2F00
+   main
+	 MOV	r9, #0
+	 MOV	r10, #6
+	 MOV    r11, #8
+	 LDR    sp, =SRAM_BASE
+	 MOV    r1,#0
+	 MOV    r2.#5 
+	 MOV    r3,#6
+	 MOV    r4,#8
+	 MOV    r5,#11
+	 MOV    r6,#12
+	 MOV    r7,#16
+	 STMIA   sp!, {r1-r7}
+	 BL      RBS
+	 LDMDB   sp!, {r1-r7}
+  stop 		B	stop
+  RBS
+		CMP    r9,r10
+		BGT    error
+		ADD    r8,r9,r10
+		MOV    r8,r8,LSR#1
+		LDR    r5,[sp,#-r8]
+		CMP    r11,r5
+		MOVEQ   r0,r5
+		SUBLT   r8,r8,#1
+		MOVLT   r10,r8
+		BLT     RBS
+		ADDGT   r8,r8,#1
+		MOVGT   r9,r8
+		BGT     RBS
+		LDMDB   sp!,{r1-r7, pc}
+
+	MOV     r0,#0
+ B	       stop
+ END
+OGR	0
+		JUMP	START
+
+	 BADDR, hex                 	0000
+	 EADDR, hex		2F00
+   main
+	 MOV	r9, #0
+	 MOV	r10, #6
+	 MOV    r11, #8
+	 LDR    sp, =SRAM_BASE
+	 MOV    r1,#0
+	 MOV    r2.#5 
+	 MOV    r3,#6
+	 MOV    r4,#8
+	 MOV    r5,#11
+	 MOV    r6,#12
+	 MOV    r7,#16
+	 STMIA   sp!, {r1-r7}
+	 BL      RBS
+	 LDMDB   sp!, {r1-r7}
+  stop 		B	stop
+  RBS
+		CMP    r9,r10
+		BGT    error
+		ADD    r8,r9,r10
+		MOV    r8,r8,LSR#1
+		LDR    r5,[sp,#-r8]
+		CMP    r11,r5
+		MOVEQ   r0,r5
+		SUBLT   r8,r8,#1
+		MOVLT   r10,r8
+		BLT     RBS
+		ADDGT   r8,r8,#1
+		MOVGT   r9,r8
+		BGT     RBS
+		LDMDB   sp!,{r1-r7, pc}
+
+	MOV     r0,#0
+ B	       stop
+ END

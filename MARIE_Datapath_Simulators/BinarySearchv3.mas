@@ -1,0 +1,110 @@
+	ORG	0
+	JUMP	start
+BADDR,	hex	0003	/ DBEGIN = 0003
+EADDR,	hex	0019	/ DEND = 0019
+	/ data section begins
+DBEGIN,	hex	0002	/ data begin address
+	hex	0005
+	hex	0006
+	hex	0008
+	hex	001a
+	hex	0020
+	hex	0025
+	hex	0030
+	hex	0031
+	hex	0038
+	hex	0039
+	hex	0050
+	hex	0059
+	hex	005F
+	hex	006A
+	hex	0090
+	hex	00AB
+	hex	00AF
+	hex	00B9
+	hex	00BD
+	hex	00C1
+	hex	00CA
+DEND,	hex	00FE	/ data end address
+	/
+	/ do not modify the code above
+	/ add/modify code and data below
+	/
+start,	Input		/take input from user to perform search
+	Store num	/store into num variable
+	Jump start2	/jump to start2
+
+
+start2, Load BADDR		/load BeginAddress
+	Subt EADDR		/Subtract DADDR from BADDR to see if DBEGIN>DEND
+	Skipcond 800		/if > 0 then number not found skip to output FFFF
+	Jump start3		/if 0 or <0 then keep searching
+	Jump NOT_FOUNDLOOP2	/Jump to output FFFF meaning number not found
+
+start3, Load BADDR	/At this point DBEGIN is not > than DEND
+	Add EADDR	/so now Load BADDR and add EADDR to computer (DEND+DBEGIN)
+	Store mid	/ Store DEND+DBEGIN at mid to divide by 2
+	Jump Count	/Jump to Count loop to initialize count to 0
+
+NOT_FOUNDLOOP2, Load NOT_FOUND 	/Load FFFF to output (at this point DBEGIN > DEND)
+		Output	/Output Loaded variable NOT_FOUND which is FFFF
+		Halt	/Terminate program because number isnt found
+
+
+Count,  Load count1	/Load count1
+	Skipcond 800	/If it is >0 initialize it to 0
+	Jump MID	/If 0 then proceed to find mid/2
+	Subt ONE	/If >0 then subtract 1 until we get to 0
+	Store count1	/Store it to continue loop
+	Jump Count	/Continue loop
+
+MID,	Load mid	/At this point count1=0 and mid = (DEND+DBEGIN) so we have to divide
+	Subt TWO	/Subtract 2 and count how many times we can subtract 2
+	Store mid	/Store it to continue looping
+	Load count1	/Load count1 to iterate
+	Add ONE		/Add one to count1 because its counter variable
+	Store count1	/Store counter
+	Load mid	/Load mid to check if it is <0
+	Skipcond 000	/If it is <0 then we are done finding (DBEGIN+DEND)/2
+	Jump MID	/If it is not <0 then we keep looping
+	Load count1	/Load count
+	Subt ONE	/Subt 1
+	Store mid	/Mid now holds the middle address which is (DBEGIN+DEND)/2
+	LoadI mid	/Load number at middle address to compare to your num
+	Subt num	/Subt num from number at middle address
+	Skipcond 400	/If 0 then we have the number and we just print it out
+	Jump ELSE_IF	/If it is not 0 then we dont have the number and we continue
+	Jump THEN	/Means we found number so we print
+
+THEN,   Load mid	/Load the address to print out
+	Output		/print
+	Halt		/we are done
+
+ELSE_IF, LoadI mid	/Load number at mid to see if it is bigger or smaller than num
+	 Store temp1	/store number at middle address in temp1
+	 Load num	/Load num
+	 Subt temp1	/Subt temp1 to compare
+	 Skipcond 000	/If it is <0 then skip next condition
+	 Jump ELSE	/Jump to Else
+	 Jump THEN_2	/Go to THEN_2
+
+THEN_2, Load mid	/Means num < middle number. Load mid to -1
+	Subt ONE	/Subt 1 from mid
+	Store EADDR	/Store it at Ending address EADDR
+	Jump start2	/Now EADDR is modified so we are closing the gap on the search
+
+ELSE, 	Load mid	/Means num is not < middle number. Load mid to add 1
+	Add ONE		/Add 1 to mid
+	Store BADDR	/Store it at BADDR
+	Jump start2	/Now BADDR is modified so we are closing the gap on the search
+
+
+
+
+count1, Dec 0000	/counter variable
+temp1, Dec 0000		/temp variable to hold number at middle address
+TWO, Dec 0002		/number 2 to find (DEND+DBEGIN)/2
+ONE, Dec 0001		/number 1 used to do arithmetic
+mid, Dec 0000		/variable to move around middle address and find value of middle address
+num, Dec 0000		/variable to store user input
+NOT_FOUND, Hex ffff	/Print this out when not found

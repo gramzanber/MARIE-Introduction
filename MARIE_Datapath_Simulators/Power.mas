@@ -1,0 +1,62 @@
+org 100
+
+jns getVariables
+jns power
+jns done
+halt
+
+getVariables, clear
+input 
+store base
+input
+store exponent
+jumpi getVariables
+
+power, clear
+load exponent
+store powerCounter
+powerLoop, load powerCounter
+subt counterAdder
+store powerCounter
+skipcond 800
+jumpi power
+load result
+skipcond 800
+load base
+store varOne
+load base
+store varTwo
+load clearCounter
+store result
+jns multiply
+jump powerLoop
+
+multiply, clear
+load varTwo
+store multiplyCounter
+loop, load multiplyCounter
+skipcond 800
+jumpi multiply
+load result
+add varOne
+store result
+load multiplyCounter
+subt counterAdder
+store multiplyCounter
+jump loop
+
+done, clear
+load result
+output
+jumpi done
+
+/ Variables
+base, dec 0
+exponent, dec 0
+varTwo, dec 0
+varOne, dec 0
+result, dec 0
+clearCounter, dec 0
+multiplyCounter, dec 0
+powerCounter, dec 0
+counterAdder, dec 1
